@@ -208,10 +208,7 @@ class GameTimeScheduler:
 
     def add_task(self, time_key: tuple[int, int], func):
         self.tasks.setdefault(time_key, []).append(func)
-
-    # def todo 校准时间
-
-    # def todo 加offset
+        
 
     def run_task(self, time_key: tuple[int, int]):
         tasks = self.tasks.get(time_key)
@@ -224,13 +221,10 @@ class GameTimeScheduler:
 
 
     def run_init(self, is_round=True, loop_offset: float=0):
-        # ------- init -------
-
         timestamp_begin = time.time()
         self.game_minutes = int(self.gtm.get_game_time_minutes(timestamp_begin))
         self.game_time_begin: tuple[int, int] = game_time_minutes_to_tuple(self.game_minutes)
         time_left = self.gtm.get_seconds_to_next_game_minute(timestamp_begin)
-        # --------------------
         # 下个游戏时间变化的现实时间刻
         self.game_time_change_timestamp = timestamp_begin + time_left
         if is_round:
@@ -289,9 +283,6 @@ class GameTimeScheduler:
         self.thread.start()
         return self.thread
 
-
-
-
     def increase_game_day_since_run(self, gts):
         """
         Default: callback at run time
@@ -300,4 +291,5 @@ class GameTimeScheduler:
         """
         self.game_days_since_run += 1
         print(f"{time.strftime("%H:%M:%S")} game_days_since_run: {self.game_days_since_run}")
+
 
